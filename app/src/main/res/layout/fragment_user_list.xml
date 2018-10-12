@@ -12,11 +12,9 @@
         />
 
     <include
-        layout="@layout/view_progress"
-        />
+        layout="@layout/view_progress" />
 
     <include
-        layout="@layout/view_retry"
-        />
+        layout="@layout/view_retry" />
 
 </RelativeLayout>

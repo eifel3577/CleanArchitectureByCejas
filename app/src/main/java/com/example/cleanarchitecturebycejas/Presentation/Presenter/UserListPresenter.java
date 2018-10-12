@@ -6,6 +6,7 @@ import com.example.cleanarchitecturebycejas.Domain.Extension.ErrorBundle;
 import com.example.cleanarchitecturebycejas.Domain.Interactor.DefaultObserver;
 import com.example.cleanarchitecturebycejas.Domain.Interactor.GetUserList;
 import com.example.cleanarchitecturebycejas.Domain.User;
+import com.example.cleanarchitecturebycejas.Presentation.DI.PerActivity;
 import com.example.cleanarchitecturebycejas.Presentation.Extension.ErrorMessageFactory;
 import com.example.cleanarchitecturebycejas.Presentation.Mapper.UserModelDataMapper;
 import com.example.cleanarchitecturebycejas.Presentation.Model.UserModel;
@@ -25,6 +26,7 @@ public class UserListPresenter implements Presenter {
 
     private UserListView viewListView;
 
+    /**обьект GetUserList.Он находится в другом слое,в Domain */
     private final GetUserList getUserListUseCase;
     private final UserModelDataMapper userModelDataMapper;
 
@@ -43,20 +45,21 @@ public class UserListPresenter implements Presenter {
 
     @Override public void pause() {}
 
+    /**отписывается от Disposable, обнуляет ссылку на прикрепленное вью (в данном случае UserListFragment) */
     @Override public void destroy() {
         this.getUserListUseCase.dispose();
         this.viewListView = null;
     }
 
     /**
-     * Initializes the presenter by start retrieving the user list.
+     * запускает загрузку списка пользователей
      */
     public void initialize() {
         this.loadUserList();
     }
 
     /**
-     * Loads all users.
+     * загружает юзеров
      */
     private void loadUserList() {
         this.hideViewRetry();
@@ -64,10 +67,12 @@ public class UserListPresenter implements Presenter {
         this.getUserList();
     }
 
+    /**получает юзера на котором кликнули */
     public void onUserClicked(UserModel userModel) {
         this.viewListView.viewUser(userModel);
     }
 
+    /**дает View команду показывать View с прогрессбаром индикатором загрузки */
     private void showViewLoading() {
         this.viewListView.showLoading();
     }
@@ -80,6 +85,7 @@ public class UserListPresenter implements Presenter {
         this.viewListView.showRetry();
     }
 
+    /**дает View команду скрыть View "Повторить" */
     private void hideViewRetry() {
         this.viewListView.hideRetry();
     }
@@ -96,10 +102,12 @@ public class UserListPresenter implements Presenter {
         this.viewListView.renderUserList(userModelsCollection);
     }
 
+    /**вызывает метод обьекта слоя Domain GetUserList execute,передает ему в параметр наблюдатель UserListObserver*/
     private void getUserList() {
         this.getUserListUseCase.execute(new UserListObserver(), null);
     }
 
+    /**наблюдатель */
     private final class UserListObserver extends DefaultObserver<List<User>> {
 
         @Override public void onComplete() {

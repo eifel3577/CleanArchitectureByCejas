@@ -63,9 +63,10 @@ public class AutoLoadImageView extends ImageView {
     }
 
     /**
-     * Set an image from a remote url.
+     * Устанавливает изображение с URL
      *
-     * @param imageUrl The url of the resource to load.
+     *
+     * @param imageUrl URL ресурса,откуда берется изображение
      */
     public void setImageUrl(final String imageUrl) {
         this.imageUrl = imageUrl;
@@ -79,8 +80,9 @@ public class AutoLoadImageView extends ImageView {
 
     /**
      * Loads and image from the internet (and cache it) or from the internal cache.
+     * Загружает изображение из интернета (и кеширует его) либо из внутреннего источника
      *
-     * @param imageUrl The remote image url to load.
+     * @param imageUrl URL ресурса,откуда берется изображение
      */
     private void loadImageFromUrl(final String imageUrl) {
         new Thread() {
@@ -110,9 +112,8 @@ public class AutoLoadImageView extends ImageView {
     }
 
     /**
-     * Run the operation of loading a bitmap on the UI thread.
-     *
-     * @param bitmap The image to load.
+     * Запускает операцию загрузки битмапа в UI потоке
+     * @param bitmap загружаемый битмап
      */
     private void loadBitmap(final Bitmap bitmap) {
         ((Activity) getContext()).runOnUiThread(new Runnable() {
@@ -124,6 +125,7 @@ public class AutoLoadImageView extends ImageView {
 
     /**
      * Loads the image place holder if any has been assigned.
+     * Загружает холдер изображения, если он был назначен.
      */
     private void loadImagePlaceHolder() {
         if (this.imagePlaceHolderResId != -1) {
@@ -138,9 +140,9 @@ public class AutoLoadImageView extends ImageView {
 
     /**
      * Get a {@link android.graphics.Bitmap} from the internal cache or null if it does not exist.
-     *
-     * @param fileName The name of the file to look for in the cache.
-     * @return A valid cached bitmap, otherwise null.
+     * получает битмап из внутреннего источника или null если его туда не загружали
+     * @param fileName имя файла который используется как кеш
+     * @return возвращает битмап,иначе null
      */
     private Bitmap getFromCache(String fileName) {
         Bitmap bitmap = null;
@@ -151,10 +153,10 @@ public class AutoLoadImageView extends ImageView {
     }
 
     /**
-     * Cache an image using the internal cache.
+     * кеширует картинку во внутренний кеш
      *
-     * @param bitmap The bitmap to cache.
-     * @param fileName The file name used for caching the bitmap.
+     * @param bitmap битмап для кеширования
+     * @param fileName имя файла использующегося как кеш
      */
     private void cacheBitmap(Bitmap bitmap, String fileName) {
         if (this.cache != null) {
@@ -163,9 +165,9 @@ public class AutoLoadImageView extends ImageView {
     }
 
     /**
-     * Checks if the device has any active internet connection.
+     * проверяет есть ли связь с интернетом
      *
-     * @return true device with internet connection, otherwise false.
+     * @return true если связь есть, иначе false
      */
     private boolean isThereInternetConnection() {
         boolean isConnected;
@@ -179,10 +181,8 @@ public class AutoLoadImageView extends ImageView {
     }
 
     /**
-     * Creates a file name from an image url
-     *
-     * @param imageUrl The image url used to build the file name.
-     * @return An String representing a unique file name.
+     * создает имя файла из имени url картинки
+     * @return строку представляющую уникальное имя файла
      */
     private String getFileNameFromUrl(String imageUrl) {
         //we could generate an unique MD5/SHA-1 here
@@ -206,10 +206,10 @@ public class AutoLoadImageView extends ImageView {
         ImageDownloader() {}
 
         /**
-         * Download an image from an url.
+         * загрузка картинки из url
          *
-         * @param imageUrl The url of the image to download.
-         * @param callback A callback used to be reported when the task is finished.
+         * @param imageUrl url картинки,которая будет загружаться
+         * @param callback колбек который будет использоваться чтобы указать что картинка загружена
          */
         void download(String imageUrl, Callback callback) {
             try {
@@ -225,9 +225,9 @@ public class AutoLoadImageView extends ImageView {
         }
 
         /**
-         * Report an error to the caller
+         * сообщает об ошибке
          *
-         * @param callback Caller implementing {@link Callback}
+         * @param callback обьект типа Callback {@link Callback}
          */
         private void reportError(Callback callback) {
             if (callback != null) {
@@ -237,12 +237,12 @@ public class AutoLoadImageView extends ImageView {
     }
 
     /**
-     * A simple disk cache implementation
+     * реализация простого дискового кеша
      */
     private static class DiskCache {
 
         private static final String TAG = "DiskCache";
-
+        /**файл */
         private final File cacheDir;
 
         DiskCache(File cacheDir) {
@@ -250,10 +250,10 @@ public class AutoLoadImageView extends ImageView {
         }
 
         /**
-         * Get an element from the cache.
+         * получение элемента из кеша
          *
-         * @param fileName The name of the file to look for.
-         * @return A valid element, otherwise false.
+         * @param fileName имя файла,в котором будет идти поиск элемента
+         * @return полученный элемент,иначе false.
          */
         synchronized Bitmap get(String fileName) {
             Bitmap bitmap = null;
@@ -265,10 +265,10 @@ public class AutoLoadImageView extends ImageView {
         }
 
         /**
-         * Cache an element.
+         * кеширование элемента
          *
-         * @param bitmap The bitmap to be put in the cache.
-         * @param fileName A string representing the name of the file to be cached.
+         * @param bitmap битмап,который должен быть закеширован
+         * @param fileName имя файла,куда будет кешироваться
          */
         synchronized void put(Bitmap bitmap, String fileName) {
             final File file = buildFileFromFilename(fileName);
@@ -285,10 +285,10 @@ public class AutoLoadImageView extends ImageView {
         }
 
         /**
-         * Creates a file name from an image url
+         * создание имени файла на основании url картинки
          *
-         * @param fileName The image url used to build the file name.
-         * @return A {@link java.io.File} representing a unique element.
+         * @param fileName url картинки, из которого будет составляться имя файла
+         * @return A {@link java.io.File} готовое имя файла
          */
         private File buildFileFromFilename(String fileName) {
             String fullPath = this.cacheDir.getPath() + File.separator + fileName;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.example.cleanarchitecturebycejas.Presentation.DI.Components.UserComponent;
+import com.example.cleanarchitecturebycejas.Presentation.DI.HasComponent;
 import com.example.cleanarchitecturebycejas.Presentation.Model.UserModel;
 import com.example.cleanarchitecturebycejas.Presentation.View.Fragment.UserListFragment;
 import com.example.cleanarchitecturebycejas.R;
@@ -25,16 +26,17 @@ public class UserListActivity extends BaseActivity implements HasComponent<UserC
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        /**в правом верхнем углу экрана будет вращаться прогрессбар */
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_layout);
-
+        /**по умолчанию сразу отображается UserListFragment*/
         this.initializeInjector();
         if (savedInstanceState == null) {
             addFragment(R.id.fragmentContainer, new UserListFragment());
         }
     }
 
+    /**активируется UserComponent для доступа к даггеру */
     private void initializeInjector() {
         this.userComponent = DaggerUserComponent.builder()
                 .applicationComponent(getApplicationComponent())

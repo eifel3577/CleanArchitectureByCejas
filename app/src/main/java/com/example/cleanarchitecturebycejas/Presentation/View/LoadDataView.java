@@ -3,38 +3,39 @@ package com.example.cleanarchitecturebycejas.Presentation.View;
 import android.content.Context;
 
 /**
- * Interface representing a View that will use to load data.
+ * Интерфей представляющий View ,использующие загруженный данные
  */
 public interface LoadDataView {
     /**
-     * Show a view with a progress bar indicating a loading process.
+     * показывает View с прогрессбаром индикатором загрузки
      */
     void showLoading();
 
     /**
-     * Hide a loading view.
+     * скрывает View с прогрессбаром индикатором загрузки
      */
     void hideLoading();
 
     /**
      * Show a retry view in case of an error when retrieving data.
+     * показывает View "Повторить" в случае ошибки при получении данных
      */
     void showRetry();
 
     /**
-     * Hide a retry view shown if there was an error when retrieving data.
+     * скрывает View "Повторить"
      */
     void hideRetry();
 
     /**
-     * Show an error message
+     * Показывает сообщение о ошибке
      *
-     * @param message A string representing an error.
+     * @param message строка которая будет отображаться в сообщении
      */
     void showError(String message);
 
     /**
-     * Get a {@link android.content.Context}.
+     * Получение  {@link android.content.Context}.
      */
     Context context();
 }
