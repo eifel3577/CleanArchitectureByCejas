@@ -10,17 +10,22 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Abstract class for a Use Case (Interactor in terms of Clean Architecture).
+ *
  * This interface represents a execution unit for different use cases (this means any use case
  * in the application should implement this contract).
+ * Абстрактный класс - интерактор для Use Case ( Use Case - "Сценарий использования", "вариант использования",
+ * "прецедент использования" (англ. use case) — в разработке программного обеспечения это описание
+ * поведения системы, когда она взаимодействует с кем-то (или чем-то) из внешней среды) Этот интерфейс представляет
+ * блок исполнения для разных вариантов Use Case
+ * Каждая имплементация Use Case должна возвращать результат используя {@link DisposableObserver},
+ * который будет выполнятьсвою работу в фоновом потоке и возвращать результат в UI поток
  *
- * By convention each UseCase implementation will return the result using a {@link DisposableObserver}
- * that will execute its job in a background thread and will post the result in the UI thread.
  */
 public abstract class UseCase<T, Params> {
 
     private final ThreadExecutor threadExecutor;
     private final PostExecutionThread postExecutionThread;
+    /**CompositeDisposable это одиночный контейнер,который может хранить в себе несколько других disposable*/
     private final CompositeDisposable disposables;
 
     UseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
@@ -30,7 +35,7 @@ public abstract class UseCase<T, Params> {
     }
 
     /**
-     * строит {@link Observable} который будет использоваться когда выполняется текущий
+     * создает {@link Observable} который будет использоваться когда выполняется текущий
      * {@link UseCase}
      */
     abstract Observable<T> buildUseCaseObservable(Params params);
@@ -39,8 +44,8 @@ public abstract class UseCase<T, Params> {
      * Выполняет текущую пользовательскую задачу
      *
      * @param observer {@link DisposableObserver} наблюдатель,который будет слушать трансляцию
-     * by {@link #buildUseCaseObservable(Params)} ()} method.
-     * @param params Parameters (Optional) used to build/execute this use case.
+     * Observable, созданного методом {@link #buildUseCaseObservable(Params)} ()} .
+     * @param params Parameters (Optional) используется для построения\выполнения use case.
      */
     public void execute(DisposableObserver<T> observer, Params params) {
         Preconditions.checkNotNull(observer);
@@ -61,6 +66,7 @@ public abstract class UseCase<T, Params> {
 
     /**
      * Dispose from current {@link CompositeDisposable}.
+     *
      */
     private void addDisposable(Disposable disposable) {
         Preconditions.checkNotNull(disposable);

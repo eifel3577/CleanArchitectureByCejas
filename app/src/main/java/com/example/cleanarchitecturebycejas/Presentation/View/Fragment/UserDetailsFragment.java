@@ -42,6 +42,7 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
     @BindView(R.id.rl_retry) RelativeLayout rl_retry;
     @BindView(R.id.bt_retry) Button bt_retry;
 
+    /**получает ID юзера, кладет его в bundle */
     public static UserDetailsFragment forUser(int userId) {
         final UserDetailsFragment userDetailsFragment = new UserDetailsFragment();
         final Bundle arguments = new Bundle();
@@ -54,6 +55,7 @@ public class UserDetailsFragment extends BaseFragment implements UserDetailsView
         setRetainInstance(true);
     }
 
+    /**инициализирует даггер */
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getComponent(UserComponent.class).inject(this);

@@ -23,6 +23,7 @@ import javax.inject.Inject;
 @PerActivity
 public class UserListPresenter implements Presenter {
 
+    /**обьект UserListView,с которым работает презентер */
     private UserListView viewListView;
 
     /**обьект GetUserList.Он находится в другом слое,в Domain */
@@ -117,7 +118,7 @@ public class UserListPresenter implements Presenter {
         this.getUserListUseCase.execute(new UserListObserver(), null);
     }
 
-    /**наблюдатель наследует интерфейс DefaultObserver */
+    /**наблюдатель наследует интерфейс DefaultObserver.Обрабатывает результаты трансляции,которая приходит от Observable */
     private final class UserListObserver extends DefaultObserver<List<User>> {
 
         /**источник успешно закончил трансляцию*/

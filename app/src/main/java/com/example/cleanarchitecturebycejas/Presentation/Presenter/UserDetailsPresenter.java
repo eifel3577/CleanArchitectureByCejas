@@ -5,6 +5,7 @@ import com.example.cleanarchitecturebycejas.Domain.Extension.DefaultErrorBundle;
 import com.example.cleanarchitecturebycejas.Domain.Extension.ErrorBundle;
 import com.example.cleanarchitecturebycejas.Domain.Interactor.GetUserDetails;
 import com.example.cleanarchitecturebycejas.Domain.User;
+import com.example.cleanarchitecturebycejas.Presentation.DI.PerActivity;
 import com.example.cleanarchitecturebycejas.Presentation.Extension.ErrorMessageFactory;
 import com.example.cleanarchitecturebycejas.Presentation.Mapper.UserModelDataMapper;
 import com.example.cleanarchitecturebycejas.Presentation.Model.UserModel;

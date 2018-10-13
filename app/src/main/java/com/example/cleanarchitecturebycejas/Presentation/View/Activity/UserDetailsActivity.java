@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.example.cleanarchitecturebycejas.Presentation.DI.Components.UserComponent;
+import com.example.cleanarchitecturebycejas.Presentation.DI.HasComponent;
 import com.example.cleanarchitecturebycejas.Presentation.View.Fragment.UserDetailsFragment;
 import com.example.cleanarchitecturebycejas.R;
 
