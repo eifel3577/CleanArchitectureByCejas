@@ -7,7 +7,7 @@ import com.example.cleanarchitecturebycejas.Data.Exception.UserNotFoundException
 import com.example.cleanarchitecturebycejas.R;
 
 /**
- * Factory used to create error messages from an Exception as a condition.
+ * Фабрика для создания сообщений об ошибках при получении стандартных исключений
  */
 public class ErrorMessageFactory {
 
@@ -17,10 +17,12 @@ public class ErrorMessageFactory {
 
     /**
      * Creates a String representing an error message.
+     * Создание строкового представления сообщения об ошибке
+     * @param context контекст необходим для получения строкового ресурса
      *
-     * @param context Context needed to retrieve string resources.
-     * @param exception An exception used as a condition to retrieve the correct error message.
-     * @return {@link String} an error message.
+     * @param exception расширение используется как условие для получения корректного сообщения
+     *                об ошибке
+     * @return {@link String} сообщение об ошибке в виде String
      */
     public static String create(Context context, Exception exception) {
         String message = context.getString(R.string.exception_message_generic);

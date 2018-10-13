@@ -1,6 +1,7 @@
 package com.example.cleanarchitecturebycejas.Presentation.Mapper;
 
 import com.example.cleanarchitecturebycejas.Domain.User;
+import com.example.cleanarchitecturebycejas.Presentation.DI.PerActivity;
 import com.example.cleanarchitecturebycejas.Presentation.Model.UserModel;
 
 import java.util.ArrayList;
@@ -10,20 +11,21 @@ import java.util.Collections;
 import javax.inject.Inject;
 
 /**
- * Mapper class used to transform {@link User} (in the domain layer) to {@link UserModel} in the
- * presentation layer.
+ * Маппер используется для трансформации User (из Domain слоя) в UserModel из Presentation слоя
  */
+
+/**метка указывает на скоуп уровня активити */
 @PerActivity
 public class UserModelDataMapper {
 
+    /**класс предоставляется другим классам как зависимость */
     @Inject
     public UserModelDataMapper() {}
 
     /**
-     * Transform a {@link User} into an {@link UserModel}.
-     *
-     * @param user Object to be transformed.
-     * @return {@link UserModel}.
+     * Трансформирует {@link User} в {@link UserModel}.
+     * @param user обьект типа User
+     * @return {@link UserModel}. обьект типа UserModel
      */
     public UserModel transform(User user) {
         if (user == null) {
@@ -40,10 +42,10 @@ public class UserModelDataMapper {
     }
 
     /**
-     * Transform a Collection of {@link User} into a Collection of {@link UserModel}.
-     *
-     * @param usersCollection Objects to be transformed.
-     * @return List of {@link UserModel}.
+     * Трансформирует коллекцию User-ов {@link User}  в коллекцию
+     * UserModel-ей {@link UserModel}
+     * @param usersCollection коллекция User-ов
+     * @return List of {@link UserModel}. коллекция UserModel-ей
      */
     public Collection<UserModel> transform(Collection<User> usersCollection) {
         Collection<UserModel> userModelsCollection;

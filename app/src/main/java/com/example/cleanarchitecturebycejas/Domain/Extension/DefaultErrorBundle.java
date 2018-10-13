@@ -2,6 +2,7 @@ package com.example.cleanarchitecturebycejas.Domain.Extension;
 
 /**
  *  Wrapper around Exceptions used to manage default errors.
+ *  Обертка вокруг исключений,используется для управления обработкой ошибок
  */
 public class DefaultErrorBundle implements ErrorBundle {
 

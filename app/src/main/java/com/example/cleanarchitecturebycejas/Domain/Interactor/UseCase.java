@@ -30,14 +30,15 @@ public abstract class UseCase<T, Params> {
     }
 
     /**
-     * Builds an {@link Observable} which will be used when executing the current {@link UseCase}.
+     * строит {@link Observable} который будет использоваться когда выполняется текущий
+     * {@link UseCase}
      */
     abstract Observable<T> buildUseCaseObservable(Params params);
 
     /**
-     * Executes the current use case.
+     * Выполняет текущую пользовательскую задачу
      *
-     * @param observer {@link DisposableObserver} which will be listening to the observable build
+     * @param observer {@link DisposableObserver} наблюдатель,который будет слушать трансляцию
      * by {@link #buildUseCaseObservable(Params)} ()} method.
      * @param params Parameters (Optional) used to build/execute this use case.
      */

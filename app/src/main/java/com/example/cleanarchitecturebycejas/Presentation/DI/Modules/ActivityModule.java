@@ -2,6 +2,8 @@ package com.example.cleanarchitecturebycejas.Presentation.DI.Modules;
 
 import android.app.Activity;
 
+import com.example.cleanarchitecturebycejas.Presentation.DI.PerActivity;
+
 import dagger.Module;
 import dagger.Provides;
 

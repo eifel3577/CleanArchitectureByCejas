@@ -18,8 +18,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * {@link Presenter} that controls communication between views and models of the presentation
- * layer.
+ * Презентер {@link Presenter} осуществляет коммуникацию между View и Model в слое Presentation
  */
 @PerActivity
 public class UserListPresenter implements Presenter {
@@ -28,8 +27,10 @@ public class UserListPresenter implements Presenter {
 
     /**обьект GetUserList.Он находится в другом слое,в Domain */
     private final GetUserList getUserListUseCase;
+    /**обьект GetUserList.Он находится в другом слое,в Domain */
     private final UserModelDataMapper userModelDataMapper;
 
+    /**презентер будет предоставляться как зависимость в другие классы */
     @Inject
     public UserListPresenter(GetUserList getUserListUserCase,
                              UserModelDataMapper userModelDataMapper) {
@@ -37,6 +38,7 @@ public class UserListPresenter implements Presenter {
         this.userModelDataMapper = userModelDataMapper;
     }
 
+    /**принимает View, с которым взаимодействует */
     public void setView(@NonNull UserListView view) {
         this.viewListView = view;
     }
@@ -77,10 +79,12 @@ public class UserListPresenter implements Presenter {
         this.viewListView.showLoading();
     }
 
+    /**дает View команду скрыть View с прогрессбаром индикатором загрузки*/
     private void hideViewLoading() {
         this.viewListView.hideLoading();
     }
 
+    /**дает View команду показать View "Повторить" */
     private void showViewRetry() {
         this.viewListView.showRetry();
     }
@@ -90,36 +94,45 @@ public class UserListPresenter implements Presenter {
         this.viewListView.hideRetry();
     }
 
+    /**принимает на вход кастомное исключение,с помощью фабрики конвертирует его
+     * в удобочитаемое сообщение,дает команду View показать это сообщение
+     * пользователю*/
     private void showErrorMessage(ErrorBundle errorBundle) {
         String errorMessage = ErrorMessageFactory.create(this.viewListView.context(),
                 errorBundle.getException());
         this.viewListView.showError(errorMessage);
     }
 
+    /**получает на вход коллекцию User-ов,трансформирует ее в коллекцию
+     * UserModel-ей,дает команду View отобразить список UserModel-ей пользователю */
     private void showUsersCollectionInView(Collection<User> usersCollection) {
         final Collection<UserModel> userModelsCollection =
                 this.userModelDataMapper.transform(usersCollection);
         this.viewListView.renderUserList(userModelsCollection);
     }
 
-    /**вызывает метод обьекта слоя Domain GetUserList execute,передает ему в параметр наблюдатель UserListObserver*/
+    /**вызывает метод обьекта слоя Domain GetUserList execute,передает ему
+     *  в параметр наблюдатель UserListObserver*/
     private void getUserList() {
         this.getUserListUseCase.execute(new UserListObserver(), null);
     }
 
-    /**наблюдатель */
+    /**наблюдатель наследует интерфейс DefaultObserver */
     private final class UserListObserver extends DefaultObserver<List<User>> {
 
+        /**источник успешно закончил трансляцию*/
         @Override public void onComplete() {
             UserListPresenter.this.hideViewLoading();
         }
 
+        /**ошибка получения данных от источника */
         @Override public void onError(Throwable e) {
             UserListPresenter.this.hideViewLoading();
             UserListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
             UserListPresenter.this.showViewRetry();
         }
 
+        /**источник прислал данные (список юзеров) */
         @Override public void onNext(List<User> users) {
             UserListPresenter.this.showUsersCollectionInView(users);
         }

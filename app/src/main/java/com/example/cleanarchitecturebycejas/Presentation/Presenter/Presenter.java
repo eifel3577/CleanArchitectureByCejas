@@ -1,24 +1,24 @@
 package com.example.cleanarchitecturebycejas.Presentation.Presenter;
 
 /**
- * Interface representing a Presenter in a model view presenter (MVP) pattern.
+ * Интерфейс который реализуют все презентеры
  */
 public interface Presenter {
     /**
-     * Method that control the lifecycle of the view. It should be called in the view's
-     * (Activity or Fragment) onResume() method.
+     * Метод для контроля за жизненным циклом View.Он должен вызываться в методе onResume()
+     * активити или фрагмента
      */
     void resume();
 
     /**
-     * Method that control the lifecycle of the view. It should be called in the view's
-     * (Activity or Fragment) onPause() method.
+     * Метод для контроля за жизненным циклом View.Он должен вызываться в методе onPause()
+     * активити или фрагмента
      */
     void pause();
 
     /**
-     * Method that control the lifecycle of the view. It should be called in the view's
-     * (Activity or Fragment) onDestroy() method.
+     * Метод для контроля за жизненным циклом View.Он должен вызываться в методе onDestroy()
+     * активити или фрагменты
      */
     void destroy();
 }

@@ -1,7 +1,8 @@
 package com.example.cleanarchitecturebycejas.Domain.Extension;
 
 /**
- * Interface to represent a wrapper around an {@link java.lang.Exception} to manage errors.
+ * Интерфейс представляет обертку вокруг стандартных исключений {@link java.lang.Exception}
+ * для управления обработкой ошибок
  */
 public interface ErrorBundle {
     Exception getException();
